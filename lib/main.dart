@@ -36,17 +36,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeCubit.isDarkModeOf(context)
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            home: BlocProvider(
-              create: (_) {
-                final NewsService service = NewsService.create();
-                final cubit = AppCubit(service);
-                cubit.fetchTechArticles();
-                cubit.fetchSciArticles();
-                cubit.fetchHealthArticles();
-                return cubit;
-              },
-              child: HomeLayout(),
-            ),
+            home: HomeLayout(),
           );
         },
       ),
