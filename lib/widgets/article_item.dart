@@ -17,11 +17,24 @@ class ArticleItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
-                  child: Image.network(
-                    article.imgUrl!,
+                  child: SizedBox(
                     width: w,
                     height: w,
-                    fit: BoxFit.cover,
+                    child: Image.network(
+                      article.imgUrl!,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, image, event) {
+                        if (event == null) {
+                          return image;
+                        } else {
+                          return SizedBox.expand(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(width: 16.0),
@@ -44,7 +57,7 @@ class ArticleItem extends StatelessWidget {
         Text(
           article.title,
           overflow: TextOverflow.ellipsis,
-          maxLines: 4,
+          maxLines: 3,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Text(
