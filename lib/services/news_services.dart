@@ -5,11 +5,11 @@ import 'package:news_app/models/top_headlines_results.dart';
 /// create new news service object
 ///
 /// [options] must has `X-Api-Key` header and `country` query optional
-class NewsServices {
-  const NewsServices(this.options);
+class NewsService {
+  const NewsService(this.options);
   final BaseOptions options;
 
-  factory NewsServices.create() {
+  factory NewsService.create() {
     final BaseOptions options = BaseOptions(
       baseUrl: 'https://newsapi.org/v2',
       headers: {
@@ -19,7 +19,7 @@ class NewsServices {
         'country': 'eg',
       },
     );
-    return NewsServices(options);
+    return NewsService(options);
   }
 
   Future<TopHeadlinesResponse> _fetchNews(String category) async {
