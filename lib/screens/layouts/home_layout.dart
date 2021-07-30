@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/models/navigator_screen_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/cubits/app_cubit.dart';
 import 'package:news_app/screens/technology_screen.dart';
 
 class HomeLayout extends StatelessWidget {
   // TODO: add const
   HomeLayout({Key? key}) : super(key: key);
-
-  final List<NavigatorScreenItem> screens = [
-    NavigatorScreenItem(
-      label: 'Technology',
-      icon: Icons.touch_app_outlined,
-      screen: Container(),
-    ),
-    NavigatorScreenItem(
-      label: 'Science',
-      icon: Icons.science,
-      screen: Container(),
-    ),
-    NavigatorScreenItem(
-      label: 'Health',
-      icon: Icons.healing,
-      screen: Container(),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +24,25 @@ class HomeLayout extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: screens
-            .map<BottomNavigationBarItem>((e) => e.toBottomNavigationBarItem())
-            .toList(),
+      bottomNavigationBar: BlocBuilder<AppCubit, AppState>(
+        buildWhen: (p, current) => current is AppChangedScreenState,
+        builder: (context, state) {
+          final cubit = context.read<AppCubit>();
+          return BottomNavigationBar(
+            items: cubit.screens
+                .map<BottomNavigationBarItem>(
+                  (e) => e.toBottomNavigationBarItem(),
+                )
+                .toList(),
+            currentIndex: cubit.selectedScreenIndex,
+            onTap: cubit.selectScreen,
+          );
+        },
       ),
-      body: TechnologyScreen(),
+      body: BlocBuilder<AppCubit, AppState>(
+        buildWhen: (_, current) => current is AppChangedScreenState,
+        builder: (context, state) => context.read<AppCubit>().currentScreen,
+      ),
     );
   }
 }

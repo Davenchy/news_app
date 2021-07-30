@@ -7,3 +7,8 @@ abstract class AppState {
 class AppInitialState extends AppState {
   const AppInitialState();
 }
+
+class AppChangedScreenState extends AppState {
+  const AppChangedScreenState(this.screenIndex);
+  final int screenIndex;
+}
