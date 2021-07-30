@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/cubits/app_cubit.dart';
+import 'package:news_app/cubits/theme_cubit.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({Key? key}) : super(key: key);
@@ -10,15 +11,17 @@ class HomeLayout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('News App'),
-        brightness: Brightness.dark,
         actions: [
           IconButton(
             onPressed: () => null,
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () => null,
-            icon: Icon(Icons.settings),
+            onPressed: () => ThemeCubit.toggleDarkModeOf(context),
+            icon: Icon(
+              Icons.light_mode,
+              color: Colors.amber,
+            ),
           ),
         ],
       ),
