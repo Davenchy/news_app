@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         create: (_) {
           final NewsService service = NewsService.create();
           final cubit = AppCubit(service);
+          cubit.fetchTechArticles();
+          cubit.fetchSciArticles();
+          cubit.fetchHealthArticles();
           return cubit;
         },
         child: HomeLayout(),
