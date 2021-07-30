@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-ThemeData buildLightTheme(BuildContext context) {
+ThemeData buildLightTheme() {
   return ThemeData(
     primarySwatch: Colors.teal,
     appBarTheme: AppBarTheme(
@@ -13,6 +13,7 @@ ThemeData buildLightTheme(BuildContext context) {
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarDividerColor: darkBackgroundColor,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
       elevation: 0,
       titleTextStyle: TextStyle(
@@ -27,7 +28,8 @@ ThemeData buildLightTheme(BuildContext context) {
 
 const Color darkBackgroundColor = Color(0xFF24292E);
 
-ThemeData buildDarkTheme(BuildContext context) {
+ThemeData buildDarkTheme() {
+  final ThemeData dark = ThemeData.dark();
   return ThemeData(
     primarySwatch: Colors.teal,
     backgroundColor: darkBackgroundColor,
@@ -40,20 +42,11 @@ ThemeData buildDarkTheme(BuildContext context) {
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: darkBackgroundColor,
         systemNavigationBarDividerColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.light,
       ),
       elevation: 0,
     ),
-    textTheme: TextTheme(
-      bodyText1: Theme.of(context).textTheme.bodyText1!.copyWith(
-            color: Colors.white,
-          ),
-      caption: Theme.of(context).textTheme.caption!.copyWith(
-            color: Colors.grey,
-          ),
-      headline4: Theme.of(context).textTheme.headline4!.copyWith(
-            color: Colors.white,
-          ),
-    ),
+    textTheme: dark.textTheme,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: darkBackgroundColor,
       unselectedItemColor: Colors.grey,

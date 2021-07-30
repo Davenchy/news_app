@@ -14,6 +14,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final ThemeData lightTheme = buildLightTheme();
+    final ThemeData darkTheme = buildDarkTheme();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
@@ -31,8 +34,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'News App',
             debugShowCheckedModeBanner: false,
-            theme: buildLightTheme(context),
-            darkTheme: buildDarkTheme(context),
+            theme: lightTheme,
+            darkTheme: darkTheme,
             themeMode: ThemeCubit.isDarkModeOf(context)
                 ? ThemeMode.dark
                 : ThemeMode.light,
