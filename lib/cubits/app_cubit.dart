@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/models/navigator_screen_item.dart';
+import 'package:news_app/models/news_article.dart';
+import 'package:news_app/models/top_headlines_results.dart';
 import 'package:news_app/screens/health_screen.dart';
 import 'package:news_app/screens/science_screen.dart';
 import 'package:news_app/screens/technology_screen.dart';
@@ -11,7 +14,13 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit(this._newsServices) : super(const AppInitialState());
 
+  static AppCubit of(BuildContext context) => context.read<AppCubit>();
+
   final NewsService _newsServices;
+  final List<NewsArticle> techArticles = [];
+  final List<NewsArticle> sciArticles = [];
+  final List<NewsArticle> healthArticles = [];
+
   int _currentScreenIndex = 0;
   final List<NavigatorScreenItem> _screens = [
     NavigatorScreenItem(
@@ -43,7 +52,20 @@ class AppCubit extends Cubit<AppState> {
 
     _currentScreenIndex = screenIndex;
     emit(AppChangedScreenState(screenIndex));
+  }
 
-    // TODO: fetch screen content
+  Future<void> fetchTechArticles() async {
+    emit(AppFetchingArticlesState());
+    techArticles.clear();
+
+    final res = await _newsServices.fetchTechnologyNews();
+    if (res is TopHeadLinesErrorResponse) {
+      emit(AppFetchErrorResponseState(res));
+      return;
+    }
+
+    final articles = (res as TopHeadLinesResultsResponse).articles;
+    techArticles.addAll(articles);
+    emit(AppViewArticlesState(articles));
   }
 }
