@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_article.dart';
+import 'package:news_app/widgets/article_item.dart';
 
 class TechnologyScreen extends StatelessWidget {
   const TechnologyScreen({Key? key}) : super(key: key);
@@ -13,8 +14,6 @@ class TechnologyScreen extends StatelessWidget {
   }
 
   Widget _buildArticlesList(BuildContext context) {
-    final double w = MediaQuery.of(context).size.width * .3;
-
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(16.0),
@@ -28,52 +27,8 @@ class TechnologyScreen extends StatelessWidget {
           publishedAt: DateTime.now(),
         );
 
-        return SizedBox(
-          height: w,
-          child: article.imgUrl == null
-              ? _buildArticleBody(context, article)
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: Image.network(
-                        article.imgUrl!,
-                        width: w,
-                        height: w,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: _buildArticleBody(context, article),
-                      ),
-                    ),
-                  ],
-                ),
-        );
+        return ArticleItem(article);
       },
-    );
-  }
-
-  Widget _buildArticleBody(BuildContext context, NewsArticle article) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          article.title,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 4,
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        Text(
-          article.publishedAt.toString(),
-          style: Theme.of(context).textTheme.caption,
-        ),
-      ],
     );
   }
 }
