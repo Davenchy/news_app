@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'News App',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+      darkTheme: buildDarkTheme(context),
       home: BlocProvider(
         create: (_) {
           final NewsService service = NewsService.create();
