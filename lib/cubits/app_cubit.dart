@@ -68,4 +68,34 @@ class AppCubit extends Cubit<AppState> {
     techArticles.addAll(articles);
     emit(AppViewArticlesState(articles));
   }
+
+  Future<void> fetchSciArticles() async {
+    emit(AppFetchingArticlesState());
+    sciArticles.clear();
+
+    final res = await _newsServices.fetchScienceNews();
+    if (res is TopHeadLinesErrorResponse) {
+      emit(AppFetchErrorResponseState(res));
+      return;
+    }
+
+    final articles = (res as TopHeadLinesResultsResponse).articles;
+    sciArticles.addAll(articles);
+    emit(AppViewArticlesState(articles));
+  }
+
+  Future<void> fetchHealthArticles() async {
+    emit(AppFetchingArticlesState());
+    healthArticles.clear();
+
+    final res = await _newsServices.fetchHealthNews();
+    if (res is TopHeadLinesErrorResponse) {
+      emit(AppFetchErrorResponseState(res));
+      return;
+    }
+
+    final articles = (res as TopHeadLinesResultsResponse).articles;
+    healthArticles.addAll(articles);
+    emit(AppViewArticlesState(articles));
+  }
 }

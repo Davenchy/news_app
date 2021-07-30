@@ -23,6 +23,11 @@ class ArticleItem extends StatelessWidget {
                     child: Image.network(
                       article.imgUrl!,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, _, __) {
+                        return SizedBox.expand(
+                          child: Icon(Icons.warning_amber_outlined),
+                        );
+                      },
                       loadingBuilder: (context, image, event) {
                         if (event == null) {
                           return image;
