@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/cubits/app_cubit.dart';
-import 'package:news_app/screens/technology_screen.dart';
 
 class HomeLayout extends StatelessWidget {
-  // TODO: add const
-  HomeLayout({Key? key}) : super(key: key);
+  const HomeLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

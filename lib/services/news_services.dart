@@ -13,7 +13,7 @@ class NewsService {
     final BaseOptions options = BaseOptions(
       baseUrl: 'https://newsapi.org/v2',
       headers: {
-        'X-Api-Key': API_KEY,
+        'X-Api-Key': apiKey,
       },
       queryParameters: {
         'country': 'eg',
@@ -34,8 +34,6 @@ class NewsService {
 
     final TopHeadlinesResponse topHeadlines =
         TopHeadlinesResponse.fromJson(res.data!);
-
-    // TODO: handle errors
 
     client.close();
     return topHeadlines;
