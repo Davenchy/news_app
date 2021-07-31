@@ -20,10 +20,12 @@ class AppCubit extends Cubit<AppState> {
   final List<NewsArticle> _techArticles = [];
   final List<NewsArticle> _sciArticles = [];
   final List<NewsArticle> _healthArticles = [];
+  final List<NewsArticle> _searchArticles = [];
 
   List<NewsArticle> get techArticles => List.unmodifiable(_techArticles);
   List<NewsArticle> get sciArticles => List.unmodifiable(_sciArticles);
   List<NewsArticle> get healthArticles => List.unmodifiable(_healthArticles);
+  List<NewsArticle> get searchArticles => List.unmodifiable(_searchArticles);
 
   int _currentScreenIndex = 0;
   final List<NavigatorScreenItem> _screens = [
@@ -73,11 +75,18 @@ class AppCubit extends Cubit<AppState> {
         articlesList: _healthArticles,
       );
 
+  Future<void> fetchArticles(String query) => _fetchArticlesOf(
+        provider: () => _newsServices.searchNews(query),
+        articlesList: _searchArticles,
+      );
+
+  void clearSearchResults() => _searchArticles.clear();
+
   Future<void> _fetchArticlesOf({
     required Future<TopHeadlinesResponse> Function() provider,
     required List<NewsArticle> articlesList,
   }) async {
-    emit(AppFetchingArticlesState());
+    emit(const AppFetchingArticlesState());
     articlesList.clear();
 
     final res = await provider();

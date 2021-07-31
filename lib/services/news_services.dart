@@ -22,14 +22,19 @@ class NewsService {
     return NewsService(options);
   }
 
-  Future<TopHeadlinesResponse> _fetchNews(String category) async {
+  Future<TopHeadlinesResponse> _fetchNews({
+    String? category,
+    String? query,
+  }) async {
     final client = Dio(options);
+
+    final Map<String, dynamic> params = {};
+    if (category != null) params['category'] = category;
+    if (query != null) params['q'] = query;
 
     final res = await client.get<Map<String, dynamic>>(
       '/top-headlines',
-      queryParameters: {
-        'category': category,
-      },
+      queryParameters: params,
     );
 
     final TopHeadlinesResponse topHeadlines =
@@ -39,10 +44,15 @@ class NewsService {
     return topHeadlines;
   }
 
-  Future<TopHeadlinesResponse> fetchScienceNews() => _fetchNews('science');
+  Future<TopHeadlinesResponse> fetchScienceNews() =>
+      _fetchNews(category: 'science');
 
   Future<TopHeadlinesResponse> fetchTechnologyNews() =>
-      _fetchNews('technology');
+      _fetchNews(category: 'technology');
 
-  Future<TopHeadlinesResponse> fetchHealthNews() => _fetchNews('health');
+  Future<TopHeadlinesResponse> fetchHealthNews() =>
+      _fetchNews(category: 'health');
+
+  Future<TopHeadlinesResponse> searchNews(String query) =>
+      _fetchNews(query: query);
 }
