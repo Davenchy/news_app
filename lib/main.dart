@@ -8,6 +8,7 @@ import 'package:news_app/services/news_services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  ThemeCubit.loadSystemDarkModeState();
   runApp(MyApp());
 }
 

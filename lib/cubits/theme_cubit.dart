@@ -8,6 +8,7 @@ part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(ThemeAppliedState(false)) {
+    _isDarkMode = _isSystemDarkModeEnabled;
     _loadThemeMode();
   }
 
@@ -20,24 +21,36 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   bool get isDarkMode => _isDarkMode;
 
-  Future<void> toggleDarkMode() async {
-    _isDarkMode = !_isDarkMode;
-    await _saveThemeMode();
+  static bool _isSystemDarkModeEnabled = false;
+
+  static void loadSystemDarkModeState() {
+    final SchedulerBinding? schedulerBinding = SchedulerBinding.instance;
+    if (schedulerBinding != null) {
+      _isSystemDarkModeEnabled = _isSystemEnabledDarkMode();
+      print('loaded system dark mode state');
+    } else {
+      print(
+        'failed to load system dark mode state, using light theme as default',
+      );
+    }
   }
 
-  bool _isSystemEnabledDarkMode() {
+  static bool _isSystemEnabledDarkMode() {
     final SchedulerBinding? schedulerBinding = SchedulerBinding.instance;
     if (schedulerBinding == null) return false;
     return schedulerBinding.window.platformBrightness != Brightness.light;
+  }
+
+  Future<void> toggleDarkMode() async {
+    _isDarkMode = !_isDarkMode;
+    await _saveThemeMode();
   }
 
   Future<void> _loadThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     final bool? isDarkModePrefs = prefs.getBool('isDarkMode');
 
-    if (isDarkModePrefs == null) {
-      _isDarkMode = _isSystemEnabledDarkMode();
-    } else {
+    if (isDarkModePrefs != null) {
       _isDarkMode = isDarkModePrefs;
     }
 
