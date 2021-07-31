@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 ThemeData buildLightTheme() {
   return ThemeData(
     primarySwatch: Colors.teal,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backwardsCompatibility: false,
       brightness: Brightness.light,
       backgroundColor: Colors.transparent,
@@ -35,7 +35,7 @@ ThemeData buildDarkTheme() {
     primarySwatch: Colors.teal,
     backgroundColor: darkBackgroundColor,
     scaffoldBackgroundColor: darkBackgroundColor,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backwardsCompatibility: false,
       backgroundColor: Colors.transparent,
       systemOverlayStyle: SystemUiOverlayStyle(
@@ -50,11 +50,11 @@ ThemeData buildDarkTheme() {
     textTheme: dark.textTheme.copyWith(
       subtitle1: dark.textTheme.subtitle1!.copyWith(fontSize: 18.0),
     ),
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: darkBackgroundColor,
       unselectedItemColor: Colors.grey,
     ),
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
         color: Colors.grey,
         fontSize: 18.0,
