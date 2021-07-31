@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:news_app/models/news_article.dart';
 import 'package:news_app/screens/view_article_screen.dart';
 
@@ -83,7 +84,7 @@ class ArticleItem extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Text(
-          article.publishedAt.toString(),
+          Intl().date('MMMM d, yyyy - hh:mm a').format(article.publishedAt),
           style: Theme.of(context).textTheme.caption,
         ),
       ],
