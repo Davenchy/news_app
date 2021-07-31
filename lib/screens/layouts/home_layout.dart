@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/cubits/app_cubit.dart';
 import 'package:news_app/cubits/theme_cubit.dart';
+import 'package:news_app/screens/search_screen.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({Key? key}) : super(key: key);
@@ -13,15 +14,27 @@ class HomeLayout extends StatelessWidget {
         title: Text('News App'),
         actions: [
           IconButton(
-            onPressed: () => null,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SearchScreen(),
+                fullscreenDialog: true,
+              ),
+            ),
             icon: Icon(Icons.search),
           ),
-          IconButton(
-            onPressed: () => ThemeCubit.toggleDarkModeOf(context),
-            icon: Icon(
-              Icons.light_mode,
-              color: Colors.amber,
-            ),
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () => ThemeCubit.toggleDarkModeOf(context),
+                icon: (state as ThemeAppliedState).isDarkMode
+                    ? const Icon(
+                        Icons.light_mode_rounded,
+                        color: Colors.amber,
+                      )
+                    : const Icon(Icons.dark_mode_rounded),
+              );
+            },
           ),
         ],
       ),
