@@ -15,6 +15,7 @@ ThemeData buildLightTheme() {
         systemNavigationBarDividerColor: darkBackgroundColor,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
+      iconTheme: IconThemeData(color: Colors.black),
       elevation: 0,
       titleTextStyle: TextStyle(
         color: Colors.black,
@@ -46,10 +47,19 @@ ThemeData buildDarkTheme() {
       ),
       elevation: 0,
     ),
-    textTheme: dark.textTheme,
+    textTheme: dark.textTheme.copyWith(
+      subtitle1: dark.textTheme.subtitle1!.copyWith(fontSize: 18.0),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: darkBackgroundColor,
       unselectedItemColor: Colors.grey,
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+        color: Colors.grey,
+        fontSize: 18.0,
+      ),
+    ),
+    dividerColor: Colors.grey,
   );
 }
