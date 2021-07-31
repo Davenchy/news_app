@@ -11,7 +11,8 @@ class HealthScreen extends StatelessWidget {
     return BlocBuilder<AppCubit, AppState>(
       buildWhen: (p, current) =>
           current is AppFetchingArticlesState ||
-          current is AppViewArticlesState,
+          current is AppViewArticlesState ||
+          current is AppFetchErrorResponseState,
       builder: (context, state) {
         final cubit = AppCubit.of(context);
         return ArticleList(
