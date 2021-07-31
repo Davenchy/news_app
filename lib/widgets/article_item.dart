@@ -15,6 +15,7 @@ class ArticleItem extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (_) => ViewArticleScreen(article.url),
+          fullscreenDialog: true,
         ),
       ),
       child: SizedBox(
