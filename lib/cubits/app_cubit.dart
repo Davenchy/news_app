@@ -17,9 +17,13 @@ class AppCubit extends Cubit<AppState> {
   static AppCubit of(BuildContext context) => context.read<AppCubit>();
 
   final NewsService _newsServices;
-  final List<NewsArticle> techArticles = [];
-  final List<NewsArticle> sciArticles = [];
-  final List<NewsArticle> healthArticles = [];
+  final List<NewsArticle> _techArticles = [];
+  final List<NewsArticle> _sciArticles = [];
+  final List<NewsArticle> _healthArticles = [];
+
+  List<NewsArticle> get techArticles => List.unmodifiable(_techArticles);
+  List<NewsArticle> get sciArticles => List.unmodifiable(_sciArticles);
+  List<NewsArticle> get healthArticles => List.unmodifiable(_healthArticles);
 
   int _currentScreenIndex = 0;
   final List<NavigatorScreenItem> _screens = [
@@ -54,48 +58,37 @@ class AppCubit extends Cubit<AppState> {
     emit(AppChangedScreenState(screenIndex));
   }
 
-  Future<void> fetchTechArticles() async {
-    emit(AppFetchingArticlesState());
-    techArticles.clear();
+  Future<void> fetchTechArticles() => _fetchArticlesOf(
+        provider: _newsServices.fetchTechnologyNews,
+        articlesList: _techArticles,
+      );
 
-    final res = await _newsServices.fetchTechnologyNews();
+  Future<void> fetchSciArticles() => _fetchArticlesOf(
+        provider: _newsServices.fetchScienceNews,
+        articlesList: _sciArticles,
+      );
+
+  Future<void> fetchHealthArticles() => _fetchArticlesOf(
+        provider: _newsServices.fetchHealthNews,
+        articlesList: _healthArticles,
+      );
+
+  Future<void> _fetchArticlesOf({
+    required Future<TopHeadlinesResponse> Function() provider,
+    required List<NewsArticle> articlesList,
+  }) async {
+    emit(AppFetchingArticlesState());
+    articlesList.clear();
+
+    final res = await provider();
     if (res is TopHeadLinesErrorResponse) {
       emit(AppFetchErrorResponseState(res));
       return;
     }
 
     final articles = (res as TopHeadLinesResultsResponse).articles;
-    techArticles.addAll(articles);
-    emit(AppViewArticlesState(articles));
-  }
-
-  Future<void> fetchSciArticles() async {
-    emit(AppFetchingArticlesState());
-    sciArticles.clear();
-
-    final res = await _newsServices.fetchScienceNews();
-    if (res is TopHeadLinesErrorResponse) {
-      emit(AppFetchErrorResponseState(res));
-      return;
-    }
-
-    final articles = (res as TopHeadLinesResultsResponse).articles;
-    sciArticles.addAll(articles);
-    emit(AppViewArticlesState(articles));
-  }
-
-  Future<void> fetchHealthArticles() async {
-    emit(AppFetchingArticlesState());
-    healthArticles.clear();
-
-    final res = await _newsServices.fetchHealthNews();
-    if (res is TopHeadLinesErrorResponse) {
-      emit(AppFetchErrorResponseState(res));
-      return;
-    }
-
-    final articles = (res as TopHeadLinesResultsResponse).articles;
-    healthArticles.addAll(articles);
+    articlesList.addAll(articles);
+    await Future.delayed(const Duration(seconds: 1));
     emit(AppViewArticlesState(articles));
   }
 }
