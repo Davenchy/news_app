@@ -11,6 +11,7 @@ class ArticleList extends StatelessWidget {
     this.isFetching = false,
     this.showWarningIcon = true,
     this.showRefreshButton = true,
+    this.noArticles,
   }) : super(key: key);
 
   final List<NewsArticle> articles;
@@ -18,6 +19,7 @@ class ArticleList extends StatelessWidget {
   final Future<void> Function() onRefresh;
   final bool showWarningIcon;
   final bool showRefreshButton;
+  final Widget? noArticles;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class ArticleList extends StatelessWidget {
       child: isFetching
           ? _buildLoadingState(context)
           : articles.isEmpty
-              ? _buildNoArticles(context)
+              ? noArticles ?? _buildNoArticles(context)
               : _buildArticlesList(context),
     );
   }
@@ -46,7 +48,7 @@ class ArticleList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16.0),
         itemCount: articles.length,
-        separatorBuilder: (_, __) => SizedBox(height: 16.0),
+        separatorBuilder: (_, __) => Divider(),
         itemBuilder: (context, index) {
           final article = articles[index];
           return ArticleItem(article);
