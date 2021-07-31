@@ -9,11 +9,15 @@ class ArticleList extends StatelessWidget {
     required this.articles,
     required this.onRefresh,
     this.isFetching = false,
+    this.showWarningIcon = true,
+    this.showRefreshButton = true,
   }) : super(key: key);
 
   final List<NewsArticle> articles;
   final bool isFetching;
   final Future<void> Function() onRefresh;
+  final bool showWarningIcon;
+  final bool showRefreshButton;
 
   @override
   Widget build(BuildContext context) {
@@ -60,28 +64,30 @@ class ArticleList extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(
-            Icons.warning_amber_rounded,
-            color: Colors.amber,
-            size: 120.0,
-          ),
-          SizedBox(height: 30.0),
+          if (showWarningIcon)
+            Icon(
+              Icons.warning_amber_rounded,
+              color: Colors.amber,
+              size: 120.0,
+            ),
+          if (showWarningIcon) const SizedBox(height: 30.0),
           Text(
             'No Articles',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline4,
           ),
-          SizedBox(height: 30.0),
-          SizedBox(
-            height: 50.0,
-            child: ElevatedButton(
-              onPressed: onRefresh,
-              child: Text(
-                'REFRESH',
-                style: TextStyle(fontSize: 20.0),
+          if (showRefreshButton) const SizedBox(height: 30.0),
+          if (showRefreshButton)
+            SizedBox(
+              height: 50.0,
+              child: ElevatedButton(
+                onPressed: onRefresh,
+                child: Text(
+                  'REFRESH',
+                  style: TextStyle(fontSize: 20.0),
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
