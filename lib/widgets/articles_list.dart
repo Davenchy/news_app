@@ -48,7 +48,7 @@ class ArticleList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16.0),
         itemCount: articles.length,
-        separatorBuilder: (_, __) => Divider(),
+        separatorBuilder: (_, __) => const Divider(),
         itemBuilder: (context, index) {
           final article = articles[index];
           return ArticleItem(article);
@@ -67,7 +67,7 @@ class ArticleList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (showWarningIcon)
-            Icon(
+            const Icon(
               Icons.warning_amber_rounded,
               color: Colors.amber,
               size: 120.0,
@@ -84,7 +84,7 @@ class ArticleList extends StatelessWidget {
               height: 50.0,
               child: ElevatedButton(
                 onPressed: onRefresh,
-                child: Text(
+                child: const Text(
                   'REFRESH',
                   style: TextStyle(fontSize: 20.0),
                 ),

@@ -22,7 +22,7 @@ class _ViewArticleScreenState extends State<ViewArticleScreen> {
                 child: LinearProgressIndicator(
                   value: indicatorProgress,
                 ),
-                preferredSize: Size.fromHeight(10),
+                preferredSize: const Size.fromHeight(10),
               )
             : null,
       ),

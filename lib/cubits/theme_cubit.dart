@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeAppliedState(false)) {
+  ThemeCubit() : super(const ThemeAppliedState(false)) {
     _isDarkMode = _isSystemDarkModeEnabled;
     _loadThemeMode();
   }
@@ -27,11 +27,6 @@ class ThemeCubit extends Cubit<ThemeState> {
     final SchedulerBinding? schedulerBinding = SchedulerBinding.instance;
     if (schedulerBinding != null) {
       _isSystemDarkModeEnabled = _isSystemEnabledDarkMode();
-      print('loaded system dark mode state');
-    } else {
-      print(
-        'failed to load system dark mode state, using light theme as default',
-      );
     }
   }
 

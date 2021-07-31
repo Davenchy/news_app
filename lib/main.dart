@@ -9,10 +9,12 @@ import 'package:news_app/services/news_services.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ThemeCubit.loadSystemDarkModeState();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final ThemeData lightTheme = buildLightTheme();
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeCubit.isDarkModeOf(context)
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            home: HomeLayout(),
+            home: const HomeLayout(),
           );
         },
       ),

@@ -28,7 +28,7 @@ class AppCubit extends Cubit<AppState> {
   List<NewsArticle> get searchArticles => List.unmodifiable(_searchArticles);
 
   int _currentScreenIndex = 0;
-  final List<NavigatorScreenItem> _screens = [
+  static const List<NavigatorScreenItem> _screens = [
     NavigatorScreenItem(
       label: 'Technology',
       icon: Icons.touch_app_outlined,

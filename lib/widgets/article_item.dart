@@ -35,7 +35,7 @@ class ArticleItem extends StatelessWidget {
                         article.imgUrl!,
                         fit: BoxFit.cover,
                         errorBuilder: (context, _, __) {
-                          return SizedBox.expand(
+                          return const SizedBox.expand(
                             child: Icon(
                               Icons.warning_amber_outlined,
                               color: Colors.red,
@@ -59,7 +59,7 @@ class ArticleItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16.0),
+                  const SizedBox(width: 16.0),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -11,17 +11,17 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News App'),
+        title: const Text('News App'),
         actions: [
           IconButton(
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SearchScreen(),
+                builder: (context) => const SearchScreen(),
                 fullscreenDialog: true,
               ),
             ),
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
           BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
