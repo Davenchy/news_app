@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:news_app/models/news_article.dart';
 import 'package:news_app/widgets/article_item.dart';
 
@@ -19,16 +20,18 @@ class ArticleList extends StatelessWidget {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
       child: isFetching
-          ? _buildLoadingState()
+          ? _buildLoadingState(context)
           : articles.isEmpty
               ? _buildNoArticles(context)
               : _buildArticlesList(context),
     );
   }
 
-  Widget _buildLoadingState() {
+  Widget _buildLoadingState(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(),
+      child: SpinKitChasingDots(
+        color: Theme.of(context).primaryColor,
+      ),
     );
   }
 

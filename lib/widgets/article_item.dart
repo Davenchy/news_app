@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:news_app/models/news_article.dart';
 
 class ArticleItem extends StatelessWidget {
@@ -25,7 +26,11 @@ class ArticleItem extends StatelessWidget {
                       fit: BoxFit.cover,
                       errorBuilder: (context, _, __) {
                         return SizedBox.expand(
-                          child: Icon(Icons.warning_amber_outlined),
+                          child: Icon(
+                            Icons.warning_amber_outlined,
+                            color: Colors.red,
+                            size: 40.0,
+                          ),
                         );
                       },
                       loadingBuilder: (context, image, event) {
@@ -34,7 +39,9 @@ class ArticleItem extends StatelessWidget {
                         } else {
                           return SizedBox.expand(
                             child: Center(
-                              child: CircularProgressIndicator(),
+                              child: SpinKitCubeGrid(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           );
                         }
